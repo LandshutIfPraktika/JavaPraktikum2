@@ -6,8 +6,11 @@ public class SoapBubble {
 	private double radius;
 	private Boolean popped = false;
 
+	private static final double[] STANDART_POS = {0,0,0};
+	private static final double STANDART_RADIUS =  1;
+
 	SoapBubble(){
-		this(0,0,0,1);
+		this(STANDART_POS[0],STANDART_POS[1],STANDART_POS[2],STANDART_RADIUS);
 	}
 
 	SoapBubble(double x,double y,double z,double radius){

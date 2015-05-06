@@ -1,72 +1,75 @@
+/**
+* This class implements the necessary logic for the BongoMain
+* programm.
+*
+* @author Georg Held
+*
+*/
 public class Bongo{
 
 
-	private static int numHulla = 0;
-	private static int numTamtam = 0;
-	private static int numTamtamtam = 0;
 
 	private static Bongo chief = new Bongo();
 
 	private Tribe tribe;
 	private int beauty = 1;
 
+	/**
+	* Implements a tribeless Bongo with 
+	* zero beauty.
+	*/
 	public Bongo(){
 		this.tribe = null;
 		this.beauty = 0;
 	}
 
+	/**
+	* Implements a new Bongo with beauty 1.
+	*/
 	public Bongo(Tribe tribe){
 		this.tribe = tribe;
-		switch (tribe){
-			case HULLA:
-			numHulla++;
-			break;
-
-			case TAMTAM:
-			numTamtam++;
-			break;
-
-			case TAMTAMTAM:
-			numTamtamtam++;
-			break;
-
-			default:
-			this.beauty = 0;
-			break;
-		}
+		
+		this.tribe.changeMember(1);
+		
 	}
 
-	protected void finalize(){
-		switch (this.tribe){
-			case HULLA:
-			numHulla--;
-			break;
-
-			case TAMTAM:
-			numTamtam--;
-			break;
-
-			case TAMTAMTAM:
-			numTamtamtam--;
-			break;
-
-			default:
-			break;
-		}
-	}
-
+	/**
+	* Get the momentary chief of the Bongos.
+	*
+	*@return reference tho the chief.
+	*/
 	public static Bongo getChief(){
 		return chief;
 	}
 
+	/**
+	* Get the beauty of a Bongo.
+	*
+	*@return the beauty as an int.
+	*/
 	public int getBeauty(){
 		return this.beauty;
 	}
 
+	/**
+	* Get the Tribe of a Bongo.
+	* 
+	*@return reference to the Tribe.
+	*@see Tribe
+	*/
 	public Tribe getTribe(){
 		return this.tribe;
 	}
 
+	/**
+	* Increments the beauty of the Bongo.
+	*
+	*<p>
+	* If the beauty of the Bongo gets higher than the beauty
+	* of the chief, it becomes the new chief.
+	*
+	*@return reference to this
+	*/
 	public Bongo brezelUp(){
 		this.beauty ++;
 		if (this.beauty > chief.beauty && this.tribe != null){
@@ -75,6 +78,17 @@ public class Bongo{
 		return this;
 	}
 
+	/**
+	* Simulates the fighting of two Bongos.
+	*<p>
+	* After the fight both Bongos have their beauty reduced by half.
+	* If the beauty of one Bongo reachesd zero it gets banished.
+	*<p>
+	* If one of the involved Bongos is the chief, it loses the position.
+	*
+	* @param that the opposing Bongo
+	* @return reference to this
+	*/
 	public Bongo fetz(Bongo that){
 		if  (this.tribe == that.tribe){
 			return this;
@@ -83,10 +97,10 @@ public class Bongo{
 			that.beauty = that.beauty / 2;
 
 			if (this.beauty == 0){
-				this.tribe = null;
+				this.tribe = tribe.WILD;
 			}
 			if (that.beauty == 0){
-				that.tribe = null;
+				that.tribe = tribe.WILD;
 			}
 			if (this == chief){
 				chief = new Bongo();
@@ -99,20 +113,15 @@ public class Bongo{
 		}
 	}
 
+	/**
+	* Gets the number of tribe kin.
+	* 
+	* @return number of tribe kin as an int
+	*/
 	public int getKin(){
-		switch(this.tribe){
-			case HULLA:
-			return numHulla;
-
-			case TAMTAM:
-			return numTamtam;
-
-			case TAMTAMTAM:
-			return numTamtamtam;
-
-			default:
-			return 0;
-		}
+		if (this.tribe != Tribe.WILD){
+			return this.tribe.getCount();
+		} else return 0;
 	}
 
 }

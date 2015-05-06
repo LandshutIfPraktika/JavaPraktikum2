@@ -37,6 +37,7 @@ public class JewelleryBox{
 	public  Boolean equals(JewelleryBox that){
 		if (this.numberOfDiamonds == that.numberOfDiamonds && this.numberOfPearls == that.numberOfPearls)
 			return true;
+		
 		else return false;
 	}
 }
